@@ -11,20 +11,11 @@ namespace Project_Backend.Data
     {
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-
-        public DbSet<RecipeIngredient> RecipesIngredients { get; set; }
+        public DbSet<Step> Steps { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ProjectDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"); 
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<RecipeIngredient>( entity =>
-            {
-                entity.HasKey(e => new { e.RecipeId, e.IngredientId }); 
-            });
         }
     }
 }

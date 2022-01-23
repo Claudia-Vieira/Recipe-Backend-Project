@@ -12,7 +12,7 @@ namespace Project_Backend.Models
         public string ImageUrl { get; set; }
         public int Duration { get; set; }
         public string Dificulty { get; set; }
-        public string Steps { get; set; }
-        public ICollection<RecipeIngredient> RecipesIngredients { get; set; }
+        public ICollection<Ingredient> Ingredients { get; set; }
+        public ICollection<Step> Steps { get; set; }
     }
 }

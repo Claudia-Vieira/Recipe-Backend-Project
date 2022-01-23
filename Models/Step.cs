@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Project_Backend.Models
 {
-    public class Ingredient
+    public class Step
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int Quantity { get; set; }
+        public string Description { get; set; }
     }
 }
