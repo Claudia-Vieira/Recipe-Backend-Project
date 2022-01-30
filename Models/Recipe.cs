@@ -12,7 +12,11 @@ namespace Project_Backend.Models
         public string ImageUrl { get; set; }
         public int Duration { get; set; }
         public string Dificulty { get; set; }
+
         public ICollection<Ingredient> Ingredients { get; set; }
-        public ICollection<Step> Steps { get; set; }
+
+       //se quiser colocar ingredientes e passos como uma lista à parte
+        //public string Ingredient { get; set; }
+        //public ICollection<Step> Steps { get; set; }
     }
 }
