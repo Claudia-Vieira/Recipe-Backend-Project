@@ -27,14 +27,19 @@ namespace Project_Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //ligação entre backend e frontend
+            services.AddCors();
+
             services.AddControllers();
             var connection = Configuration.GetConnectionString("projectDB");
             services.AddDbContext<RecipeContext>(options => options.UseSqlServer(connection));
+            
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -50,6 +55,8 @@ namespace Project_Backend
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }
