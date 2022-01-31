@@ -15,6 +15,6 @@ namespace Project_Backend.Models
 
         public ICollection<Ingredient> Ingredients { get; set; }
 
-        //public ICollection<Step> Steps { get; set; }
+        public ICollection<Step> Steps { get; set; }
     }
 }
