@@ -15,8 +15,6 @@ namespace Project_Backend.Models
 
         public ICollection<Ingredient> Ingredients { get; set; }
 
-       //se quiser colocar ingredientes e passos como uma lista à parte
-        //public string Ingredient { get; set; }
         //public ICollection<Step> Steps { get; set; }
     }
 }

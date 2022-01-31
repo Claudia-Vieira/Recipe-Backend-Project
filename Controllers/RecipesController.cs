@@ -33,7 +33,7 @@ namespace Project_Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Recipe>> GetRecipeById(int id)
         {
-            Recipe receita = await _contexto.Recipes.FindAsync(id);
+            Recipe receita = await _contexto.Recipes.Include(x=>x.Ingredients).Where(x=>x.Id == id).FirstOrDefaultAsync();
 
             if (receita == null)
             {
