@@ -30,9 +30,15 @@ namespace Project_Backend
             //ligação entre backend e frontend
             services.AddCors();
 
+            services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
             services.AddControllers();
             var connection = Configuration.GetConnectionString("projectDB");
             services.AddDbContext<RecipeContext>(options => options.UseSqlServer(connection));
+
+
             
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
