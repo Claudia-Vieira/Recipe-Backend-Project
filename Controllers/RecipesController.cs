@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_Backend.Data;
 using Project_Backend.Models;
@@ -33,14 +34,45 @@ namespace Project_Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Recipe>> GetRecipeById(int id)
         {
-            Recipe receita = await _contexto.Recipes.Include(x=>x.Ingredients).Include(x=>x.Steps).Where(x=>x.Id == id).FirstOrDefaultAsync();
+            Recipe recipe = await _contexto.Recipes.Include(x=>x.Ingredients).Include(x=>x.Steps).Where(x=>x.Id == id).FirstOrDefaultAsync();
 
-            if (receita == null)
+            if (recipe == null)
             {
                 return NotFound();
             }
 
-            return receita;
+            return recipe;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Recipe>> AddRecipe(Recipe recipe)
+        {
+
+            _contexto.Recipes.Add(recipe);
+
+            await _contexto.SaveChangesAsync();
+
+            return CreatedAtAction("GetRecipeById", new { id = recipe.Id }, recipe);
+
+            //_contexto.Recipes.Add(recipe);
+
+            //await _contexto.SaveChangesAsync();
+
+            //return CreatedAtAction("GetRecipeById", new { id = recipe.Id }, recipe);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Recipe>> DeleteRecipeById(int id)
+        {
+
+            var recipeToDelete = await _contexto.Recipes.Where(x => x.Id == id).Include(x => x.Ingredients).Include(x => x.Steps).Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            _contexto.Recipes.Remove(recipeToDelete);
+
+            await _contexto.SaveChangesAsync();
+
+            return null;
+
         }
 
     }
