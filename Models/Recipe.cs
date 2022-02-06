@@ -10,6 +10,7 @@ namespace Project_Backend.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string ImageUrl { get; set; }
+
         public int Duration { get; set; }
         public string Dificulty { get; set; }
 

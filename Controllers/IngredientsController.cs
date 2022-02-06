@@ -43,5 +43,46 @@ namespace Project_Backend.Controllers
             return ingredient;
         }
 
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Ingredient>> DeleteIngredientById(int id)
+        {
+
+            var ingredientToDelete = await _contexto.Ingredients.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            _contexto.Ingredients.Remove(ingredientToDelete);
+
+            await _contexto.SaveChangesAsync();
+
+            return null;
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Ingredient>> AddIngredient(Ingredient ingredient, int id)
+        {
+
+
+            try
+            {
+                _contexto.Ingredients.Add(ingredient);
+
+                await _contexto.SaveChangesAsync();
+
+
+                return CreatedAtAction("GetIngredientById", new { id = ingredient.Id }, ingredient);
+
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+
+            }
+
+
+
+        }
+
     }
 }

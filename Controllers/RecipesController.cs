@@ -5,8 +5,11 @@ using Project_Backend.Data;
 using Project_Backend.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web;
 
 
 namespace Project_Backend.Controllers
@@ -16,6 +19,8 @@ namespace Project_Backend.Controllers
     public class RecipesController : Controller
     {
         private readonly RecipeContext _contexto;
+        const string FILE_PATH = @".\assets\";
+
 
         public RecipesController(RecipeContext contexto)
         {
@@ -44,21 +49,56 @@ namespace Project_Backend.Controllers
             return recipe;
         }
 
+
         [HttpPost]
-        public async Task<ActionResult<Recipe>> AddRecipe(Recipe recipe)
+        public async Task<ActionResult<Recipe>> AddRecipe(Recipe recipe, int id)
         {
 
-            _contexto.Recipes.Add(recipe);
+            
+            try
+            {
+                _contexto.Recipes.Add(recipe);
 
-            await _contexto.SaveChangesAsync();
+                await _contexto.SaveChangesAsync();
 
-            return CreatedAtAction("GetRecipeById", new { id = recipe.Id }, recipe);
 
-            //_contexto.Recipes.Add(recipe);
+                return CreatedAtAction("GetRecipeById", new { id = recipe.Id }, recipe);
 
-            //await _contexto.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
 
-            //return CreatedAtAction("GetRecipeById", new { id = recipe.Id }, recipe);
+                return BadRequest();
+
+            }
+
+            
+
+        }
+
+        public async Task<ActionResult<Ingredient>> AddIngredient(int id, Ingredient ingredient)
+        {
+
+
+            try
+            {
+               _contexto.Ingredients.Add(ingredient);
+
+                await _contexto.SaveChangesAsync();
+
+
+                return CreatedAtAction("GetIngredientById", new { id = ingredient.Id }, ingredient);
+
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+
+            }
+
+
+
         }
 
         [HttpDelete("{id}")]
@@ -74,6 +114,13 @@ namespace Project_Backend.Controllers
             return null;
 
         }
+      
 
     }
-}
+
+
+    }
+
+
+
+
